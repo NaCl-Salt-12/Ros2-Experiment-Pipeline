@@ -58,7 +58,7 @@ done
 
 echo "Successfully copied all scripts."
 
-if [ -d $1/launch ]; then
+if [ -d "$1"/launch ]; then
 	echo "Launch directory already exists in the workspace."
 else
 	mkdir -p "$1/launch"
