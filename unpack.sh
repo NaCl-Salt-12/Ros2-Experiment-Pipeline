@@ -133,6 +133,7 @@ else
 	echo "Copying start_experiment.sh to ros2 workspace..."
 	if cp ./start_experiment.sh "$1/"; then
 		echo "start_experiment.sh copied successfully"
+		chmod +x "$1/start_experiment.sh"
 	else
 		echo "ERROR: Failed to copy start_experiment.sh"
 		exit 1
@@ -151,15 +152,18 @@ fi
 
 echo "Setting up python environment..."
 
-python3 -m venv "$1/scripts/script_env"
+if python3 -m venv "$1/scripts/script_env"; then
+	echo "Virtual environment created successfully."
+else
+	echo "ERROR: Failed to create virtual environment."
+	exit 1
+fi
 
 source "$1/scripts/script_env/bin/activate"
 
 pip install --upgrade pip
 
-pip install requirements.txt
-
-chmod +x "$1/start_experiment.sh"
+pip install -r requirements.txt
 
 echo "Unpacking complete."
 echo "To finish setup please follow the instructions outlined in the README.md file."
